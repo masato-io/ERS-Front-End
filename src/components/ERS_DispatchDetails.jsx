@@ -46,17 +46,17 @@ class ERS_DispatchDetails extends React.Component{
           <li>{current_dispatch_description}</li>
           <li>Address</li>
           <li>{current_dispatch_address}</li>
-          <li>Vehicles On Site</li>
+          <li>Apparatus Assigned</li>
           <li>{current_dispatch_assignment_array.map((vehicle) =>
             <span>{vehicle + ' '}</span>
           )}</li>
-          <li>Nearest Cross Street</li>
+          <li>Nearest Cross Streets</li>
           <li>{current_dispatch_crossstreets}</li>
           <li>Radio Channel</li>
           <li>{current_dispatch_radiofreq}</li>
           <li>Physical Map Reference</li>
           <li>{current_dispatch_physical_map_ref}</li>
-          <li>Dispatch Timestamp</li>
+          <li>Dispatch Timeout</li>
           <li>{current_dispatch_time_stamp}</li>
           <li>Misc. Details</li>
           <li>{current_dispatch_misc}</li>
