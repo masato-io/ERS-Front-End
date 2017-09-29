@@ -3,7 +3,7 @@ import { getERS_DispatchDetails } from '../actions/GetERS_DispatchAction'
 
 @connect((store) => {
   return {
-    current_dispatch_apparatus_id_array: store.ERS_DispatchDetails.current_dispatch_apparatus_id_array,
+    current_dispatch_assignment_array: store.ERS_DispatchDetails.current_dispatch_assignment_array,
     current_dispatch_crossstreets: store.ERS_DispatchDetails.current_dispatch_crossstreets,
     current_dispatch_description: store.ERS_DispatchDetails.current_dispatch_description,
     current_dispatch_district: store.ERS_DispatchDetails.current_dispatch_district,
@@ -37,7 +37,7 @@ class ERS_DispatchDetails extends React.Component{
 
   render(){
 
-    const { current_dispatch_description, current_dispatch_address, current_dispatch_apparatus_id_array, current_dispatch_crossstreets, current_dispatch_radiofreq, current_dispatch_physical_map_ref, current_dispatch_time_stamp, current_dispatch_misc, current_dispatch_district, current_dispatch_id } = this.props;
+    const { current_dispatch_description, current_dispatch_address, current_dispatch_assignment_array, current_dispatch_crossstreets, current_dispatch_radiofreq, current_dispatch_physical_map_ref, current_dispatch_time_stamp, current_dispatch_misc, current_dispatch_district, current_dispatch_id } = this.props;
 
     return (
       <div>
@@ -47,7 +47,9 @@ class ERS_DispatchDetails extends React.Component{
           <li>Address</li>
           <li>{current_dispatch_address}</li>
           <li>Vehicles On Site</li>
-          <li>{current_dispatch_apparatus_id_array}</li>
+          <li>{current_dispatch_assignment_array.map((vehicle) =>
+            <span>{vehicle + ' '}</span>
+          )}</li>
           <li>Nearest Cross Street</li>
           <li>{current_dispatch_crossstreets}</li>
           <li>Radio Channel</li>
