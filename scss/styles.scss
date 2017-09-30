@@ -22,10 +22,15 @@ ul {
 
   li:nth-child(odd) {
     color: firebrick;
+    font-weight: bold;
     box-shadow: 0 4px 2px -2px lightgray;
     background-color: white;
     border-top: 2px solid white;
     border-bottom: 2px solid firebrick;
     padding: 5px 0 5px 10px;
+  }
+
+  li:nth-child(even) {
+    padding: 10px 0 0 15px;
   }
 }
