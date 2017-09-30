@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { getERS_DispatchDetails } from '../actions/GetERS_DispatchAction'
+import { getCurrenctGeoData } from '../actions/GetCurrentGeoData'
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 
 @connect((store) => {
@@ -14,6 +15,8 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-map
     current_dispatch_address: store.ERS_DispatchDetails.current_dispatch_address,
     current_dispatch_time_stamp: store.ERS_DispatchDetails.current_dispatch_time_stamp,
     current_dispatch_misc: store.ERS_DispatchDetails.current_dispatch_misc,
+    geo_latitude_origin: store.ERS_DispatchDetails.geo_latitude_origin,
+    geo_longitude_origin: store.ERS_DispatchDetails.geo_longitude_origin,
     geo_latitude_destination: store.ERS_DispatchDetails.geo_latitude_destination,
     geo_longitude_destination: store.ERS_DispatchDetails.geo_longitude_destination,
   }
@@ -24,8 +27,6 @@ class ERS_DispatchDetails extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      latitudeStart: null,
-      longitudeStart: null
     }
   }
 
@@ -37,8 +38,7 @@ class ERS_DispatchDetails extends React.Component{
     this.props.dispatch(getERS_DispatchDetails(id))
 
     navigator.geolocation.getCurrentPosition(position => {
-      this.setState({latitudeStart : position.coords.latitude})
-      this.setState({longitudeStart : position.coords.longitude})
+      this.props.dispatch(getCurrenctGeoData(position.coords.latitude, position.coords.longitude))
     }, () => {
       console.log('denied');
     });
@@ -46,18 +46,15 @@ class ERS_DispatchDetails extends React.Component{
   }
 
   render(){
-    const { current_dispatch_description, current_dispatch_address, current_dispatch_assignment_array, current_dispatch_crossstreets, current_dispatch_radiofreq, current_dispatch_physical_map_ref, current_dispatch_time_stamp, current_dispatch_misc, current_dispatch_district, current_dispatch_id, geo_latitude_destination, geo_longitude_destination} = this.props;
-
-    console.log(geo_latitude_destination);
-    console.log(geo_longitude_destination);
+    const { current_dispatch_description, current_dispatch_address, current_dispatch_assignment_array, current_dispatch_crossstreets, current_dispatch_radiofreq, current_dispatch_physical_map_ref, current_dispatch_time_stamp, current_dispatch_misc, current_dispatch_district, current_dispatch_id, geo_latitude_destination, geo_longitude_destination, geo_latitude_origin, geo_longitude_origin} = this.props;
 
     const MapWithAMarker = withScriptjs(withGoogleMap(props =>
       <GoogleMap
         defaultZoom={10}
-        defaultCenter={{ lat: this.state.latitudeStart, lng: this.state.longitudeStart }}
+        defaultCenter={{ lat: geo_latitude_origin, lng: geo_longitude_origin }}
       >
         <Marker
-          position={{ lat: this.state.latitudeStart, lng: this.state.longitudeStart }}
+          position={{ lat: geo_latitude_origin, lng: geo_longitude_origin }}
         />
         <Marker
           position={{ lat: geo_latitude_destination, lng: geo_longitude_destination }}
@@ -91,7 +88,7 @@ class ERS_DispatchDetails extends React.Component{
         </ul>
 
 
-        {!this.state.latitudeStart && !geo_latitude_destination
+        {!geo_latitude_origin && !geo_latitude_destination
           ?
           <div></div>
           :

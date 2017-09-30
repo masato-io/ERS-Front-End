@@ -10,6 +10,8 @@ export default function reducer(
     current_dispatch_assignment_array: [],
     current_dispatch_time_stamp: null,
     current_dispatch_misc: null,
+    geo_latitude_origin: null,
+    geo_longitude_origin: null,
     geo_latitude_destination: null,
     geo_longitude_destination: null,
     error: null
@@ -31,6 +33,13 @@ export default function reducer(
           action.payload.streetnumber + ' ' + action.payload.streetname,
         current_dispatch_time_stamp: action.payload.timeout,
         current_dispatch_misc: action.payload.misc
+      };
+    }
+    case 'SET_ORIGIN': {
+      return {
+        ...state,
+        geo_latitude_origin: action.payload.latitude,
+        geo_longitude_origin: action.payload.longitude
       };
     }
     case 'SET_DESTINATION': {
